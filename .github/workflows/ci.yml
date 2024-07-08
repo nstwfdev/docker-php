@@ -19,6 +19,10 @@ jobs:
         image: docker:19.03.12
         options: --privileged
 
+    strategy:
+      matrix:
+        php_version: ['8.0', '8.1', '8.2', '8.3']
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -31,7 +35,5 @@ jobs:
 
       - name: Build and push Docker images
         run: |
-          docker build -t ${{ env.DOCKER_IMAGE_PATH }}:fpm-${{ env.PHP_VERSION }} --build-arg PHP_VERSION=${{ env.PHP_VERSION }} .
-          docker push ${{ env.DOCKER_IMAGE_PATH }}:fpm-${{ env.PHP_VERSION }}
-        env:
-          PHP_VERSION: 8.3
+          docker build -t ${{ env.DOCKER_IMAGE_PATH }}:fpm-${{ matrix.php_version }} --build-arg PHP_VERSION=${{ matrix.php_version }} .
+          docker push ${{ env.DOCKER_IMAGE_PATH }}:fpm-${{ matrix.php_version }}
