@@ -39,6 +39,7 @@ RUN install-php-extensions \
     pgsql \
     opcache \
     soap \
+    sodium \
     sockets \
     xsl \
     zip \
